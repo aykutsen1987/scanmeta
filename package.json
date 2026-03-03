@@ -1,12 +1,17 @@
 {
-  "name": "gemini-ocr-proxy",
+  "name": "scanmeta-ocr-proxy",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Render proxy - Gemini 1.5 Flash OCR duzeltme",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "express": "^4.18.2",
-    "@google/generative-ai": "^0.1.0"
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5"
   },
-  "scripts": {
-    "start": "node index.js"
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
