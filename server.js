@@ -26,7 +26,7 @@ app.use(express.json({ limit: "4mb" }));
 // ── Ücretsiz model fallback sırası ───────────────────────────────────────────
 // Sıralama: en yüksek RPM önce, aynı RPM'de en yeni model önce
 const MODEL_FALLBACK_ORDER = [
-    "gemini-1.5-flash",       // RPM:15 RPD:sınırsız — önce dene, eski key'lerle çalışır
+    "models/gemini-1.5-flash",       // RPM:15 RPD:sınırsız — önce dene, eski key'lerle çalışır
     "gemini-2.5-flash-lite",  // RPM:10 RPD:20 — 1.5 yoksa
     "gemini-2.5-flash",       // RPM:5  RPD:20 — Lite dolunca
     "gemini-3-flash",         // RPM:5  RPD:20 — hepsi dolunca
