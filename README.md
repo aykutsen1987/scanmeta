@@ -58,6 +58,6 @@ Gemini 3 senaryodan birini otomatik seçer:
 
 `AiOcrCorrectionEngine.kt` içindeki sabitler:
 ```kotlin
-private const val BUILT_IN_PROXY_URL    = "https://<render-url>.onrender.com"
-private const val BUILT_IN_PROXY_SECRET = "04699028burcu"
+private const val BUILT_IN_PROXY_URL    = 
+private const val BUILT_IN_PROXY_SECRET = 
 ```
