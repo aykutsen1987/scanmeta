@@ -1,26 +1,63 @@
-# ScanMeta OCR Proxy
+# ScanMeta OCR Proxy — Node.js (v2.0.0)
 
-Render.com Node.js proxy - Gemini 1.5 Flash ile OCR duzeltme.
+Render / Railway / Fly.io üzerinde çalışan Gemini 1.5 Flash proxy sunucusu.
 
-## Deploy (Render.com)
+## Kurulum
 
-1. Bu klasoru GitHub reposuna push edin
-2. render.com -> New Web Service -> GitHub repo secin
-3. Environment Variables:
-   - GEMINI_API_KEY = Google AI Studio API key
-   - PROXY_SECRET   = Istediginiz guvenlik sifresi
-4. Start Command: node server.js
-5. Deploy sonrasi URL: https://your-app.onrender.com
+```bash
+npm install
+npm start
+```
 
-## Android Ayarlar
+## Render Deploy Adımları
 
-ScanMeta -> Ayarlar -> Gemini AI OCR:
-- Proxy URL: https://your-app.onrender.com
-- Gemini Key: PROXY_SECRET degeri
+1. GitHub'a push et
+2. Render → **New Web Service** → repo seç
+3. **Environment** sekmesine ekle:
 
-## Nasil Calisir
+| Değişken         | Değer                          |
+|------------------|-------------------------------|
+| `GEMINI_API_KEY` | `AIza...` (Google AI Studio)  |
+| `PROXY_SECRET`   | `04699028burcu` (veya değiştir) |
 
-Android ML Kit OCR -> POST /fix -> Render Proxy -> Gemini 1.5 Flash
+4. Build Command: `npm install`  
+   Start Command:  `node server.js`
 
-Her istek BASLA...BITTI sinirlariyla gonderilir.
-Yanit dondukten sonra JS GC yerel degiskenleri RAM den temizler (stateless).
+## Endpoint'ler
+
+| Yöntem | URL      | Açıklama                  |
+|--------|----------|---------------------------|
+| GET    | /health  | Sunucu sağlık kontrolü    |
+| POST   | /fix     | OCR metni düzelt (Gemini) |
+
+### POST /fix
+
+**İstek:**
+```json
+{ "rawOcrText": "ham OCR metni buraya..." }
+```
+
+**Başlıklar:**
+- `x-proxy-secret: <PROXY_SECRET>` → Gömülü anahtar (Kademe 2)
+- `x-gemini-key: <AIza...>`        → Kullanıcı anahtarı (Kademe 1)
+
+**Yanıt:**
+```json
+{ "correctedText": "Gemini tarafından düzeltilmiş metin" }
+```
+
+## Akıllı Hibrit Prompt
+
+Gemini 3 senaryodan birini otomatik seçer:
+
+1. **TABLO** — Sütun hizalaması korunur, | ayraçları kullanılır
+2. **RESİM + METİN** — Görsel konumları [GÖRSEL] etiketiyle işaretlenir, metin düzeltilir
+3. **SADECE METİN** — Word kalitesinde karakter düzeltmeli temiz metin
+
+## Android Bağlantısı
+
+`AiOcrCorrectionEngine.kt` içindeki sabitler:
+```kotlin
+private const val BUILT_IN_PROXY_URL    = "https://<render-url>.onrender.com"
+private const val BUILT_IN_PROXY_SECRET = "04699028burcu"
+```
