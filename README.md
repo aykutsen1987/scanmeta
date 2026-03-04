@@ -17,8 +17,8 @@ npm start
 
 | Değişken         | Değer                          |
 |------------------|-------------------------------|
-| `GEMINI_API_KEY` | `AIza...` (Google AI Studio)  |
-| `PROXY_SECRET`   | `04699028burcu` (veya değiştir) |
+| `GEMINI_API_KEY` | |
+| `PROXY_SECRET`   | |
 
 4. Build Command: `npm install`  
    Start Command:  `node server.js`
