@@ -24,12 +24,13 @@ app.use(cors());
 app.use(express.json({ limit: "4mb" }));
 
 // ── Ücretsiz model fallback sırası ───────────────────────────────────────────
-// Sıralama: en yüksek RPM önce, aynı RPM'de en yeni model önce
+// Sıralama: Kullanıcı isteği (1.5 Flash) + En yüksek kotalar (3.1 Lite)
 const MODEL_FALLBACK_ORDER = [
-    "models/gemini-1.5-flash",       // RPM:15 RPD:sınırsız — önce dene, eski key'lerle çalışır
-    "gemini-2.5-flash-lite",  // RPM:10 RPD:20 — 1.5 yoksa
-    "gemini-2.5-flash",       // RPM:5  RPD:20 — Lite dolunca
-    "gemini-3-flash",         // RPM:5  RPD:20 — hepsi dolunca
+    "models/gemini-1.5-flash",        // İlk denenecek (Günlük 1.500 sayfa hakkı)
+    "models/gemini-3.1-flash-lite",   // İkinci (Günlük 500 sayfa hakkı)
+    "models/gemini-2.5-flash-lite",   // Üçüncü (Günlük 20 sayfa hakkı)
+    "models/gemini-3-flash",          // Dördüncü (Günlük 20 sayfa hakkı)
+    "models/gemini-2.5-flash"         // Beşinci (Günlük 20 sayfa hakkı)
 ];
 
 // ── Akıllı Hibrit System Instruction ─────────────────────────────────────────
